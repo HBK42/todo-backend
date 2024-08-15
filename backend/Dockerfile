@@ -1,27 +1,16 @@
-# Use an official Node.js runtime as a parent image
-FROM node:14
+# Use Node.js LTS version
+FROM node:16
 
-# Set the working directory
-WORKDIR /app
+# Create app directory
+WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json
+# Install app dependencies
 COPY package*.json ./
-
-# Install dependencies
 RUN npm install
 
-# Copy the rest of the application code
+# Bundle app source
 COPY . .
 
-# Expose port
+# Expose port and start application
 EXPOSE 3000
-
-# Set environment variables
-ENV DB_DIALECT=mariadb
-ENV DB_USER=todo-admin
-ENV DB_PW=admin-pw
-ENV DB_HOST=mariadb:3306
-ENV DB_NAME=tododot
-
-# Start the application
-CMD ["node", "bin/www"]
+CMD [ "node", "app.js" ]
