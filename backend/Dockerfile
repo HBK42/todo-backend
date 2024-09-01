@@ -1,18 +1,18 @@
-# Use Node.js base image
-FROM node:16
+# Use an official Node.js runtime as a parent image
+FROM node:16-alpine
 
-# Set working directory
+# Set the working directory
 WORKDIR /app
 
-# Install dependencies
-COPY package.json yarn.lock ./
-RUN yarn install
+# Copy package.json and install dependencies
+COPY package.json ./
+RUN npm install
 
-# Copy source code
+# Copy the rest of the application files
 COPY . .
 
-# Expose the application port
+# Expose the port the app runs on
 EXPOSE 3000
 
-# Start the application
-CMD ["node", "server.js"]
+# Start the backend server
+CMD ["npm", "start"]
