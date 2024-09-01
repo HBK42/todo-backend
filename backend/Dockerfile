@@ -1,16 +1,18 @@
-# Use Node.js LTS version
+# Use Node.js base image
 FROM node:16
 
-# Create app directory
-WORKDIR /usr/src/app
+# Set working directory
+WORKDIR /app
 
-# Install app dependencies
-COPY package*.json ./
-RUN npm install
+# Install dependencies
+COPY package.json yarn.lock ./
+RUN yarn install
 
-# Bundle app source
+# Copy source code
 COPY . .
 
-# Expose port and start application
+# Expose the application port
 EXPOSE 3000
-CMD [ "node", "app.js" ]
+
+# Start the application
+CMD ["node", "server.js"]
